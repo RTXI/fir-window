@@ -58,23 +58,15 @@ createRTXIPlugin(void)
 static DefaultGUIModel::variable_t
     vars[] =
       {
-            { "Input", "Input to Filter", DefaultGUIModel::INPUT, },
-            { "Output", "Output of Filter", DefaultGUIModel::OUTPUT },
-            { "# Taps", "Number of Filter Taps (Odd Number)",
-                DefaultGUIModel::PARAMETER | DefaultGUIModel::INTEGER, },
-            {
-                "Frequency 1 (Hz)",
-                "Cut off Frequency #1 as Fraction of Pi, used for Lowpass/Highpass",
-                DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
-            {
-                "Frequency 2 (Hz)",
-                "Cut off Frequency #1 as Fraction of Pi, not used for Lowpass/Highpass",
-                DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
-            { "Chebyshev (dB)", "Attenuation Parameter for Chebyshev Window",
-                DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
-            { "Kaiser Alpha", "Attenuation Parameter for Kaiser Window",
-                DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
-            { "Time (s)", "Time (s)", DefaultGUIModel::STATE, }, };
+         { "Input", "Input to Filter", DefaultGUIModel::INPUT, },
+         { "Output", "Output of Filter", DefaultGUIModel::OUTPUT, },
+         { "# Taps", "Number of Filter Taps (Odd Number)", DefaultGUIModel::PARAMETER | DefaultGUIModel::INTEGER, },
+         { "Frequency 1 (Hz)", "Cut off Frequency #1 as Fraction of Pi, used for Lowpass/Highpass", DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
+         { "Frequency 2 (Hz)", "Cut off Frequency #1 as Fraction of Pi, not used for Lowpass/Highpass", DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
+         { "Chebyshev (dB)", "Attenuation Parameter for Chebyshev Window", DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
+         { "Kaiser Alpha", "Attenuation Parameter for Kaiser Window", DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
+         { "Time (s)", "Time (s)", DefaultGUIModel::STATE, }, 
+		};
 
 static size_t num_vars = sizeof(vars) / sizeof(DefaultGUIModel::variable_t);
 
@@ -91,7 +83,7 @@ FIRwindow::FIRwindow(void) :
 
   initParameters();
   createGUI(vars, num_vars);
-  update( INIT);
+  update(INIT);
   refresh(); // refresh the GUI
   printf("\nStarting FIR window filter:\n"); // prints to terminal
 }
@@ -172,7 +164,7 @@ FIRwindow::initParameters()
   signalin.clear();
   assert(signalin.size() == 0);
   window_shape = HAMM;
-  filter_type = LOWPASS;
+  filter_type = BANDPASS;
   num_taps = 9;
   lambda1 = 0.1; // Hz / pi
   lambda2 = 0.6; // Hz / pi
@@ -340,23 +332,23 @@ FIRwindow::saveFIRData()
           switch (window_shape)
             {
           case RECT: // rectangular
-            stream << QString("RECT taps:") << num_taps << "\n";
+            stream << QString(" RECT taps:") << num_taps << "\n";
             break;
           case TRI: // triangular
-            stream << QString("TRI taps:") << num_taps << "\n";
+            stream << QString(" TRI taps:") << num_taps << "\n";
             break;
           case HAMM: // Hamming
-            stream << QString("HAMM taps:") << num_taps << "\n";
+            stream << QString(" HAMM taps:") << num_taps << "\n";
             break;
           case HANN: // Hann
-            stream << QString("HANN taps:") << num_taps << "\n";
+            stream << QString(" HANN taps:") << num_taps << "\n";
             break;
           case CHEBY: // Dolph-Chebyshev
-            stream << QString("CHEBY taps:") << num_taps << " alpha:" << Calpha
+            stream << QString(" CHEBY taps:") << num_taps << " alpha:" << Calpha
                 << "\n";
             break;
           case KAISER:
-            stream << QString("KAISER taps:") << num_taps << " alpha:"
+            stream << QString(" KAISER taps:") << num_taps << " alpha:"
                 << Kalpha << "\n";
             break;
             }
@@ -482,10 +474,10 @@ FIRwindow::createGUI(DefaultGUIModel::variable_t *var, int size)
           scrollLayout->addWidget(param.label, parameter.size(), 0);
           param.edit = new DefaultGUILineEdit(viewport);
           scrollLayout->addWidget(param.edit, parameter.size(), 1);
-
-          QToolTip::add(param.label, vars[i].description);
+			
+			 QToolTip::add(param.label, vars[i].description);
           QToolTip::add(param.edit, vars[i].description);
-
+			 
           if (vars[i].flags & PARAMETER)
             {
               if (vars[i].flags & DOUBLE)
@@ -527,7 +519,6 @@ FIRwindow::createGUI(DefaultGUIModel::variable_t *var, int size)
               param.type = COMMENT;
               param.index = ncomment++;
             }
-
           parameter[vars[i].name] = param;
         }
     }
@@ -558,4 +549,55 @@ FIRwindow::createGUI(DefaultGUIModel::variable_t *var, int size)
   QObject::connect(timer, SIGNAL(timeout(void)), this, SLOT(refresh(void)));
   show();
 
+}
+
+/*
+	Overloaded the doSave function to save the window_shape and filter_type
+*/
+
+void FIRwindow::doSave(Settings::Object::State &s) const {
+   s.saveInteger("paused", pauseButton->isOn());
+   if (isMaximized())
+      s.saveInteger("Maximized", 1);
+   else if (isMinimized())
+      s.saveInteger("Minimized", 1);
+
+   QPoint pos = parentWidget()->pos();
+   s.saveInteger("X", pos.x());
+   s.saveInteger("Y", pos.y());
+   s.saveInteger("W", width());
+   s.saveInteger("H", height());
+
+	s.saveInteger("Window Shape", window_shape); //Save window shape
+	s.saveInteger("Filter Type", filter_type); //Save filter type
+
+   for (std::map<QString, param_t>::const_iterator i = parameter.begin(); i != parameter.end(); ++i) {
+      s.saveString(i->first, i->second.edit->text());
+      std::cout<<i->first<<"\t"<<i->second.edit->text()<<std::endl;
+	}
+}
+
+/*
+	Overloaded the doLoad function to load the window/filter settings saved in doSave
+*/
+void FIRwindow::doLoad(const Settings::Object::State &s) {
+   for (std::map<QString, param_t>::iterator i = parameter.begin(); i != parameter.end(); ++i)
+      i->second.edit->setText(s.loadString(i->first));
+   if (s.loadInteger("Maximized"))
+      showMaximized();
+   else if (s.loadInteger("Minimized"))
+      showMinimized();
+   // this only exists in RTXI versions >1.3
+   if (s.loadInteger("W") != NULL) {
+       resize(s.loadInteger("W"), s.loadInteger("H"));
+      parentWidget()->move(s.loadInteger("X"), s.loadInteger("Y"));
+   }
+
+	FIRwindow::window_shape = window_t(s.loadInteger("Window Shape")); //Load window_shape
+	FIRwindow::filter_type = filter_t(s.loadInteger("Filter Type")); //Load filter_type
+	FIRwindow::windowShape->setCurrentItem(window_shape); //sets GUI to display current window_type
+	FIRwindow::filterType->setCurrentItem(filter_type); //same, but for filter_type
+
+   pauseButton->setOn(s.loadInteger("paused"));
+   modify();
 }

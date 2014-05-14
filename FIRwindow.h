@@ -44,6 +44,7 @@
 #include <workspace.h>
 #include <default_gui_model.h>
 #include <qstring.h>
+#include <settings.h>
 #include <cstdlib>
 #include <qmessagebox.h>
 #include <qfiledialog.h>
@@ -68,12 +69,12 @@ public:
 
   enum window_t
   {
-    RECT, TRI, HAMM, HANN, CHEBY, KAISER,
+    RECT=0, TRI, HAMM, HANN, CHEBY, KAISER
   };
 
   enum filter_t
   {
-    LOWPASS, HIGHPASS, BANDPASS, BANDSTOP,
+    LOWPASS=0, HIGHPASS, BANDPASS, BANDSTOP
   };
 
 protected:
@@ -120,6 +121,9 @@ private:
   OpenFile(QString);
   QFile dataFile;
   QTextStream stream;
+
+  void doSave(Settings::Object::State &) const;
+  void doLoad(const Settings::Object::State &);
 
 private slots:
 // all custom slots
