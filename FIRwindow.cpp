@@ -573,7 +573,6 @@ void FIRwindow::doSave(Settings::Object::State &s) const {
 
    for (std::map<QString, param_t>::const_iterator i = parameter.begin(); i != parameter.end(); ++i) {
       s.saveString(i->first, i->second.edit->text());
-      std::cout<<i->first<<"\t"<<i->second.edit->text()<<std::endl;
 	}
 }
 
