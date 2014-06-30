@@ -1,3 +1,7 @@
+# Text Editor backups
+*.swp
+*~
+
 # Compiled Object files
 *.slo
 *.lo
@@ -20,4 +24,4 @@
 *.out
 *.app
 
-*.swp
+
