@@ -1,35 +1,36 @@
-PLUGIN_NAME = fir_window
+PLUGIN_NAME = FIRwindow
 
-HEADERS = fir-window.h\
-          /usr/local/lib/rtxi_includes/DSP/gen_win.h\
-			 /usr/local/lib/rtxi_includes/DSP/rectnglr.h\
-			 /usr/local/lib/rtxi_includes/DSP/trianglr.h\
-			 /usr/local/lib/rtxi_includes/DSP/hamming.h\
-			 /usr/local/lib/rtxi_includes/DSP/hann.h\
-			 /usr/local/lib/rtxi_includes/DSP/dolph.h\
-			 /usr/local/lib/rtxi_includes/DSP/kaiser.h\
-			 /usr/local/lib/rtxi_includes/DSP/acosh.h\
-			 /usr/local/lib/rtxi_includes/DSP/firideal.h\
-			 /usr/local/lib/rtxi_includes/DSP/fir_dsgn.h\
-			 /usr/local/lib/rtxi_includes/DSP/lin_dsgn.h\
-			 /usr/local/lib/rtxi_includes/DSP/fir_resp.h\
-
-SOURCES = fir-window.cpp \
-          /usr/local/lib/rtxi_includes/DSP/gen_win.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/rectnglr.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/trianglr.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/hamming.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/hann.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/dolph.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/kaiser.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/acosh.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/firideal.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/fir_dsgn.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/lin_dsgn.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/fir_resp.cpp\
-			 moc_fir-window.cpp\
+HEADERS = FIRwindow.h
 
 LIBS = -lqwt
+
+SOURCES = FIRwindow.cpp \
+	include/DSP/gen_win.cpp\
+	include/DSP/rectnglr.cpp\
+	include/DSP/trianglr.cpp\
+	include/DSP/hamming.cpp\
+	include/DSP/hann.cpp\
+	include/DSP/dolph.cpp\
+	include/DSP/kaiser.cpp\
+	include/DSP/acosh.cpp\
+	include/DSP/firideal.cpp\
+	include/DSP/fir_dsgn.cpp\
+	include/DSP/lin_dsgn.cpp\
+	include/DSP/fir_resp.cpp\
+    moc_FIRwindow.cpp\
+	include/DSP/gen_win.h\
+	include/DSP/rectnglr.h\
+	include/DSP/trianglr.h\
+	include/DSP/hamming.h\
+	include/DSP/hann.h\
+	include/DSP/dolph.h\
+	include/DSP/kaiser.h\
+	include/DSP/acosh.h\
+	include/DSP/firideal.h\
+	include/DSP/fir_dsgn.h\
+	include/DSP/lin_dsgn.h\
+	include/DSP/fir_resp.h\
+
 
 ### Do not edit below this line ###
 
