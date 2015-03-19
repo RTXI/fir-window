@@ -1,32 +1,34 @@
 PLUGIN_NAME = fir_window
 
+RTXI_INCLUDES = /usr/local/lib/rtxi_includes
+
 HEADERS = fir-window.h\
-          /usr/local/lib/rtxi_includes/DSP/gen_win.h\
-			 /usr/local/lib/rtxi_includes/DSP/rectnglr.h\
-			 /usr/local/lib/rtxi_includes/DSP/trianglr.h\
-			 /usr/local/lib/rtxi_includes/DSP/hamming.h\
-			 /usr/local/lib/rtxi_includes/DSP/hann.h\
-			 /usr/local/lib/rtxi_includes/DSP/dolph.h\
-			 /usr/local/lib/rtxi_includes/DSP/kaiser.h\
-			 /usr/local/lib/rtxi_includes/DSP/acosh.h\
-			 /usr/local/lib/rtxi_includes/DSP/firideal.h\
-			 /usr/local/lib/rtxi_includes/DSP/fir_dsgn.h\
-			 /usr/local/lib/rtxi_includes/DSP/lin_dsgn.h\
-			 /usr/local/lib/rtxi_includes/DSP/fir_resp.h\
+          $(RTXI_INCLUDES)/DSP/gen_win.h\
+			 $(RTXI_INCLUDES)/DSP/rectnglr.h\
+			 $(RTXI_INCLUDES)/DSP/trianglr.h\
+			 $(RTXI_INCLUDES)/DSP/hamming.h\
+			 $(RTXI_INCLUDES)/DSP/hann.h\
+			 $(RTXI_INCLUDES)/DSP/dolph.h\
+			 $(RTXI_INCLUDES)/DSP/kaiser.h\
+			 $(RTXI_INCLUDES)/DSP/acosh.h\
+			 $(RTXI_INCLUDES)/DSP/firideal.h\
+			 $(RTXI_INCLUDES)/DSP/fir_dsgn.h\
+			 $(RTXI_INCLUDES)/DSP/lin_dsgn.h\
+			 $(RTXI_INCLUDES)/DSP/fir_resp.h\
 
 SOURCES = fir-window.cpp \
-          /usr/local/lib/rtxi_includes/DSP/gen_win.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/rectnglr.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/trianglr.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/hamming.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/hann.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/dolph.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/kaiser.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/acosh.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/firideal.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/fir_dsgn.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/lin_dsgn.cpp\
-			 /usr/local/lib/rtxi_includes/DSP/fir_resp.cpp\
+          $(RTXI_INCLUDES)/DSP/gen_win.cpp\
+			 $(RTXI_INCLUDES)/DSP/rectnglr.cpp\
+			 $(RTXI_INCLUDES)/DSP/trianglr.cpp\
+			 $(RTXI_INCLUDES)/DSP/hamming.cpp\
+			 $(RTXI_INCLUDES)/DSP/hann.cpp\
+			 $(RTXI_INCLUDES)/DSP/dolph.cpp\
+			 $(RTXI_INCLUDES)/DSP/kaiser.cpp\
+			 $(RTXI_INCLUDES)/DSP/acosh.cpp\
+			 $(RTXI_INCLUDES)/DSP/firideal.cpp\
+			 $(RTXI_INCLUDES)/DSP/fir_dsgn.cpp\
+			 $(RTXI_INCLUDES)/DSP/lin_dsgn.cpp\
+			 $(RTXI_INCLUDES)/DSP/fir_resp.cpp\
 			 moc_fir-window.cpp\
 
 LIBS = -lqwt
