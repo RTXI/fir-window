@@ -66,6 +66,7 @@ FIRwindow::FIRwindow(void) : DefaultGUIModel("FIR Window", ::vars, ::num_vars) {
 	customizeGUI();
 	update(INIT);
 	refresh(); // refresh the GUI
+	QTimer::singleShot(0, this, SLOT(resizeMe()));
 	//  printf("\nStarting FIR window filter:\n"); // prints to terminal
 }
 
