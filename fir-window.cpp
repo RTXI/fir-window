@@ -67,7 +67,6 @@ FIRwindow::FIRwindow(void) : DefaultGUIModel("FIR Window", ::vars, ::num_vars) {
 	update(INIT);
 	refresh(); // refresh the GUI
 	QTimer::singleShot(0, this, SLOT(resizeMe()));
-	//  printf("\nStarting FIR window filter:\n"); // prints to terminal
 }
 
 FIRwindow::~FIRwindow(void) {}
@@ -115,12 +114,10 @@ void FIRwindow::update(DefaultGUIModel::update_flags_t flag) {
 	
 		case PAUSE:
 			output(0) = 0; // stop command in case pause occurs in the middle of command
-			printf("Protocol paused.\n");
 			break;
 	
 		case UNPAUSE:
 			bookkeep();
-			printf("Protocol started.\n");
 			break;
 
 		case PERIOD:
@@ -164,27 +161,21 @@ void FIRwindow::bookkeep() {
 void FIRwindow::updateWindow(int index) {
 	if (index == 0) {
 		window_shape = RECT;
-		printf("Filter window now set to rectangular\n");
 		makeFilter();
 	} else if (index == 1) {
 		window_shape = TRI;
-		printf("Filter window now set to triangular\n");
 		makeFilter();
 	} else if (index == 2) {
 		window_shape = HAMM;
-		printf("Filter window now set to Hamming\n");
 		makeFilter();
 	} else if (index == 3) {
 		window_shape = HANN;
-		printf("Filter window now set to Hann\n");
 		makeFilter();
 	} else if (index == 4) {
 		window_shape = CHEBY;
-		printf("Filter window now set to Chebyshev\n");
 		makeFilter();
 	} else if (index == 5) {
 		window_shape = KAISER;
-		printf("Filter window now set to Kaiser\n");
 		makeFilter();
 	}
 }
@@ -192,19 +183,12 @@ void FIRwindow::updateWindow(int index) {
 void FIRwindow::updateFilterType(int index) {
 	if (index == 0) {
 		filter_type = LOWPASS;
-		printf("Filter type now set to LOWPASS\n");
 		makeFilter();
 	} else if (index == 1) {
 		filter_type = HIGHPASS;
-		printf("Filter type now set to HIGHPASS\n");
-		makeFilter();
-	} else if (index == 2) {
-		filter_type = BANDPASS;
-		printf("Filter type now set to BANDPASS\n");
 		makeFilter();
 	} else if (index == 3) {
 		filter_type = BANDSTOP;
-		printf("Filter type now set to BANDSTOP\n");
 		makeFilter();
 	}
 }
@@ -241,11 +225,6 @@ void FIRwindow::makeFilter() {
 	//	h2 = filter_design->GetCoefficients();
 	filter_design->ApplyWindow(disc_window);
 	h3 = filter_design->GetCoefficients();
-	printf("\n      Windowed Filter\n");
-	for (int i = 0; i < num_taps; i++) {
-		printf("h[%i] = %f\n", i, h3[i]);
-	}
-	printf("\n");
 }
 
 void FIRwindow::saveFIRData() {
@@ -304,14 +283,11 @@ void FIRwindow::saveFIRData() {
 					stream << QString(" KAISER taps:") << num_taps << " alpha:"	<< Kalpha << "\n";
 					break;
 			}
-			printf("Filter impulse response:\n");
 
 			for (int i = 0; i < num_taps; i++) {
-				printf("%f\n", h3[i]);
 				stream << QString("h[") << i << "] = " << (double) h3[i] << "\n";
 			}
 			dataFile.close();
-			printf("File closed.\n");
 		} else {
 			QMessageBox::information(this, "FIR filter: Save filter parameters",
 			"There was an error writing to this file. You can view\n"
@@ -344,7 +320,6 @@ bool FIRwindow::OpenFile(QString FName) {
 	}
 	stream.setDevice(&dataFile);
 	//	stream.setPrintableData(false); // write binary
-	printf("File opened: %s\n", FName.toStdString().data());
 	return true;
 }
 
