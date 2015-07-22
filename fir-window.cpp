@@ -48,7 +48,6 @@ static DefaultGUIModel::variable_t vars[] = {
 	{ "Frequency 2 (Hz)", "Cut off Frequency #1 as Fraction of Pi, not used for Lowpass/Highpass", DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
 	{ "Chebyshev (dB)", "Attenuation Parameter for Chebyshev Window", DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
 	{ "Kaiser Alpha", "Attenuation Parameter for Kaiser Window", DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE, },
-	{ "Time (s)", "Time (s)", DefaultGUIModel::STATE, },
 };
 
 static size_t num_vars = sizeof(vars) / sizeof(DefaultGUIModel::variable_t);
@@ -74,13 +73,10 @@ FIRwindow::~FIRwindow(void) {}
 //execute, the code block that actually does the signal processing
 void FIRwindow::execute(void) {
 	signalin.push_back(input(0));
-	systime = count * dt; // current time, s
 	out = 0;
-	for (n = num_taps; n < 2 * num_taps; n++) out += h3[n] * signalin[n];
-
+	for (n = num_taps; n < 2 * num_taps; n++)
+		out += h3[n] * signalin[n];
 	output(0) = out;
-	
-	count++; // increment count to measure time
 	return;
 }
 
@@ -92,7 +88,6 @@ void FIRwindow::update(DefaultGUIModel::update_flags_t flag) {
 			setParameter("Frequency 2 (Hz)", QString::number(lambda2));
 			setParameter("Kaiser Alpha", QString::number(Kalpha));
 			setParameter("Chebyshev (dB)", QString::number(Calpha));
-			setState("Time (s)", systime);
 			windowShape->setCurrentIndex(window_shape);
 			filterType->setCurrentIndex(filter_type);
 			break;
@@ -147,8 +142,6 @@ void FIRwindow::initParameters() {
 }
 
 void FIRwindow::bookkeep() {
-	count = 0;
-	systime = 0;
 	signalin.set_capacity(2 * num_taps);
 	convolution = new double[num_taps];
 	for (int i = 0; i < 2 * num_taps; i++)	signalin.push_back(0);// pad with zeros

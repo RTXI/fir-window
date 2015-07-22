@@ -72,8 +72,6 @@ class FIRwindow : public DefaultGUIModel {
 		double* convolution;
 		double out;
 		double dt;
-		long long count; // keep track of time
-		double systime;
 		int n;
 
 		// filter parameters
