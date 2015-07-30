@@ -32,16 +32,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <DSP/lin_dsgn.h>
 #include <DSP/firideal.h>
 
-#include <event.h>
-#include <map>
-#include <mutex.h>
-#include <plugin.h>
-#include <rt.h>
-#include <workspace.h>
 #include <default_gui_model.h>
 #include <settings.h>
 #include <cstdlib>
-#include <QtGui>
 
 class FIRwindow : public DefaultGUIModel {
 	
