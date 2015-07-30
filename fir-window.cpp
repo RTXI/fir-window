@@ -30,7 +30,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <numeric>
 #include <time.h>
 
-#include <QtGui>
 #include <sys/stat.h>
 
 //create plug-in
