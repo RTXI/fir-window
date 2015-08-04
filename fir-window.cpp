@@ -318,7 +318,7 @@ bool FIRwindow::OpenFile(QString FName) {
 //create the GUI components
 void FIRwindow::customizeGUI(void) {
 	QGridLayout *customlayout = DefaultGUIModel::getLayout();
-	QGroupBox *box = new QGroupBox;
+	QWidget *box = new QWidget;
 	QVBoxLayout *boxLayout = new QVBoxLayout;
 	box->setLayout(boxLayout);
 	QPushButton *saveDataButton = new QPushButton("Save FIR Parameters");
