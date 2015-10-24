@@ -24,7 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <fir-window.h>
 #include <main_window.h>
-#include <rtfile.h>
 #include <math.h>
 #include <algorithm>
 #include <numeric>
