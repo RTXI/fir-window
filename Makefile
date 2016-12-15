@@ -5,9 +5,9 @@ RTXI_INCLUDES =
 HEADERS = fir-window.h\
 
 SOURCES = fir-window.cpp \
-			 moc_fir-window.cpp\
+          moc_fir-window.cpp\
 
-LIBS = -lqwt -lrtdsp
+LIBS = -lrtdsp
 
 ### Do not edit below this line ###
 
