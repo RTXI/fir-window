@@ -1,4 +1,4 @@
-###FIR Filter Design (Window)
+### FIR Filter Design (Window)
 
 **Requirements:** GSL, Qwt, DSP helper files (included), Boost library  
 **Limitations:** There is a limit to how high a filter order you can use. This module does not test if your filter order will break real-time.  
@@ -15,17 +15,17 @@ This module uses a circular buffer from the Boost library for storing recent inp
 $ sudo apt-get install libboost-dev
 ````
 
-####Input Channels
+#### Input Channels
 1. input(0) - Input to filter
 
-####Output Channels
+#### Output Channels
 1. output(0) - Output to filter
 
-####Parameters
+#### Parameters
 1. Frequency 1 (Hz) - Cutoff frequency 1 as fraction of pi, used for lowpass/highpass filters
 2. Frequency 2 (Hz) - Cutoff frequency as fraction of pi, NOT used for lowpass/highpass filters (i.e., bandpass/bandstop/etc.)
 3. Chebyshev (dB) - Attenuation parameter for Chebyshev windows
 4. Kaiser Alpha - Attenuation parameter for Kaiser window
 
-####States
+#### States
 1. Time (s)
