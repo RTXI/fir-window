@@ -52,9 +52,6 @@ void fir_window::Component::execute()
       writeoutput(0, out);
       break;
     case RT::State::INIT:
-      initParameters();
-      setState(RT::State::EXEC);
-      break;
     case RT::State::MODIFY:
       num_taps = getValue<int64_t>(PARAMETER::TAPS);
       if (num_taps % 2 == 0) {
