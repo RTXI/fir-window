@@ -52,7 +52,6 @@ void fir_window::Component::execute()
       writeoutput(0, out);
       break;
     case RT::State::INIT:
-    case RT::State::MODIFY:
       num_taps = getValue<int64_t>(PARAMETER::TAPS);
       if (num_taps % 2 == 0) {
         num_taps = num_taps + 1;
@@ -69,6 +68,24 @@ void fir_window::Component::execute()
       bookkeep();
       makeFilter();
       setState(RT::State::EXEC);
+      break;
+    case RT::State::MODIFY:
+      num_taps = getValue<int64_t>(PARAMETER::TAPS);
+      if (num_taps % 2 == 0) {
+        num_taps = num_taps + 1;
+      }
+
+      lambda1 = getValue<double>(PARAMETER::FREQUENCY_1);
+      lambda2 = getValue<double>(PARAMETER::FREQUENCY_2);
+      Kalpha = getValue<double>(PARAMETER::KAISER_ALPHA_ATTENUATION);
+      Calpha = getValue<double>(PARAMETER::CHEBYSHEV_ATTENUATION);
+      window_shape =
+          static_cast<window_t>(getValue<int64_t>(PARAMETER::WINDOW_TYPE));
+      filter_type =
+          static_cast<filter_t>(getValue<int64_t>(PARAMETER::FILTER_TYPE));
+      bookkeep();
+      makeFilter();
+      setState(RT::State::PAUSE);
       break;
     case RT::State::PAUSE:
       writeoutput(0, 0);
