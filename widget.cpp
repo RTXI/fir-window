@@ -4,7 +4,11 @@
 
 #include "widget.hpp"
 
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
 #include <sys/stat.h>
+#include <rtxi/rtos.hpp>
 
 fir_window::Plugin::Plugin(Event::Manager* ev_manager)
     : Widgets::Plugin(ev_manager, std::string(fir_window::MODULE_NAME))
